@@ -52,6 +52,7 @@ O programa deve conter os seguintes valores pré-definidos: Saldo da Conta de Or
 Após autenticação, o usuário deve informar: Chave PIX de destino (sem validação externa) e Valor da transferência (em reais).
 O sistema deve verificar o saldo e limite do PIX antes de realizar a transação.
 Após a tentativa (bem-sucedida ou não), o sistema deve exibir um relatório com as informações: Valor da transferência. Resultado da transferência (realizada ou negada). Saldo final de origem. Limite Transação PIX. Saldo final de destino.
+
 Escreva um programa que, a partir de um input do usuário, calcule a área e volume de um cilindro. O programa deve conter a classe Cilindro com seus atributos e métodos.
 Área cilindro = 2 * π * raio * (raio + altura)
 Volume cilindro = π * raio2 * altura
@@ -61,6 +62,7 @@ Exemplo:
 Raio = 5.0 e Altura = 8.0
 Área = 408.20
 Volume = 628.00
+
 Escreva um programa em Java que calcule o valor a média final de um aluno, considerando: 
 O professor deve informar o nome do aluno e número de matricula;
 O professor deve informar o valor da Avaliação 1 (Peso 4), Avaliação 2 (Peso 4) e Atividade Complementar (Peso 2);
@@ -79,6 +81,7 @@ Exibir dados de um cliente com todos atributos.
 O sistema não deve permitir saldos negativos.
 O sistema deve apresentar as operações disponíveis em um menu.
 O usuário pode executar as operações disponíveis até encerrar a execução do programa.
+
 Escreva um programa que, a partir de um input do professor, calcule o valor a média final de um aluno em uma disciplina, considerando que: 
 O professor deve informar o número de avaliações que serão inseridas para o aluno (não existe um limite para a quantidade de avaliações);
 O professor deve informar o valor das avaliações (0 – 10);
@@ -90,6 +93,7 @@ O professor deve informar o número de alunos da turma;
 O professor deve informar o número total de avaliações que serão inseridas para cada aluno;
 O professor deve informar o valor das avaliações (0 – 10);
 O sistema deve calcular e imprimir a média final da turma.
+
 Escreva um programa que, a partir de um input do usuário, calcule o valor total de uma compra e valor das parcelas do pagamento, considerando que: 
 Produto possui: nome e valor.
 O usuário pode inserir quantos produtos desejar na sua cesta de compra.

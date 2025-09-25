@@ -123,3 +123,102 @@ Exibir dados de um cliente com todos atributos.
 O sistema não deve permitir saldos negativos.
 O sistema deve apresentar as operações disponíveis em um menu.
 O usuário pode executar as operações disponíveis até encerrar a execução do programa.
+
+
+Escreva um programa que, a partir de um input do usuário, calcule o valor total de uma compra e valor das parcelas do pagamento, considerando que: 
+Produto possui: nome e valor.
+O usuário pode inserir quantos produtos desejar na sua cesta de compra.
+O usuário deve informar o nome do produto e seu valor para adicionar o produto a cesta.
+Ao encerrar a inserção de produtos na cesta, o sistema deve
+Solicitar o número de parcelas de pagamento.
+Calcular o valor final da compra.
+Calcular o valor de cada parcela.
+Imprimir o resumo da compra.
+
+Escreva um programa que relacione um ingresso com seu comprador, considerando que: 
+O comprador possui nome e CPF.
+O bilhete possui um número de ingresso e descrição do show.
+Um cliente pode comprar um único bilhete e o bilhete pertence a um único cliente (1-1).
+O sistema deve registrar a venda do bilhete para o comprador.
+O sistema deve imprimir um resumo da transação.
+
+Escreva um programa que relacione um funcionário e sua carteira de trabalho, considerando que:
+Cada funcionário deve possuir exatamente uma carteira de trabalho.
+Funcionário possui: nome, cargo e salário.
+Carteira de trabalho possui:  número, data de emissão e órgão emissor.
+O sistema deve registrar o cadastro do funcionário e sua carteira de trabalho.
+Por meio do teclado, crie pelo menos dois funcionários com suas respectivas carteiras e exiba os dados de cada um para simular o vínculo oficial entre empregado e carteira de trabalho no contexto de uma empresa.
+
+Escreva um programa que relacione um autor com sua obra (livro), considerando que: 
+O autor possui nome e CPF.
+O livro possui uma descrição e número de páginas.
+Um autor pode estar relacionado a muitos livros e um livro pertence a um único autor (1-*).
+O sistema deve registrar a autoria do livro a seu autor.
+O sistema deve imprimir um resumo das obras do autor.
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+// Classe Livro
+class Livro {
+    private String descricao;
+    private int numeroPaginas;
+    private Autor autor;
+
+    public Livro(String descricao, int numeroPaginas, Autor autor) {
+        this.descricao = descricao;
+        this.numeroPaginas = numeroPaginas;
+        this.autor = autor;
+        autor.adicionarLivro(this); // Registra o livro no autor
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public int getNumeroPaginas() {
+        return numeroPaginas;
+    }
+
+    public Autor getAutor() {
+        return autor;
+    }
+}
+
+// Classe Autor
+class Autor {
+    private String nome;
+    private String cpf;
+    private List<Livro> livros;
+
+    public Autor(String nome, String cpf) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.livros = new ArrayList<>();
+    }
+
+    public void adicionarLivro(Livro livro) {
+        livros.add(livro);
+    }
+
+    public void imprimirResumoObras() {
+        System.out.println("Autor: " + nome + " | CPF: " + cpf);
+        System.out.println("Obras:");
+        for (Livro livro : livros) {
+            System.out.println("- " + livro.getDescricao() + " (" + livro.getNumeroPaginas() + " páginas)");
+        }
+    }
+}
+
+// Classe principal
+public class Main {
+    public static void main(String[] args) {
+        Autor autor1 = new Autor("Machado de Assis", "123.456.789-00");
+
+        Livro livro1 = new Livro("Dom Casmurro", 256, autor1);
+        Livro livro2 = new Livro("Memórias Póstumas de Brás Cubas", 198, autor1);
+
+        autor1.imprimirResumoObras();
+    }
+}

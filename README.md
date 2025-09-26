@@ -1,5 +1,46 @@
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.import java.util.Scanner;
+
+public class CalculadoraJuros {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        double capital, taxa, tempo, montante;
+        int opcao;
+
+        System.out.println("===== Calculadora de Juros =====");
+        System.out.println("1. Juros Simples");
+        System.out.println("2. Juros Compostos");
+        System.out.print("Escolha a opção (1 ou 2): ");
+        opcao = sc.nextInt();
+
+        System.out.print("Digite o capital inicial (P): ");
+        capital = sc.nextDouble();
+
+        System.out.print("Digite a taxa de juros (%): ");
+        taxa = sc.nextDouble() / 100; // Convertendo para decimal
+
+        System.out.print("Digite o tempo (em meses ou anos): ");
+        tempo = sc.nextDouble();
+
+        switch (opcao) {
+            case 1:
+                montante = capital * (1 + taxa * tempo);
+                System.out.printf("Montante com Juros Simples: R$ %.2f\n", montante);
+                break;
+
+            case 2:
+                montante = capital * Math.pow(1 + taxa, tempo);
+                System.out.printf("Montante com Juros Compostos: R$ %.2f\n", montante);
+                break;
+
+            default:
+                System.out.println("Opção inválida!");
+        }
+
+        sc.close();
+    }
+}
+
 
 class Produto {
     String nome;

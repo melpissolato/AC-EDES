@@ -222,3 +222,171 @@ public class Main {
         autor1.imprimirResumoObras();
     }
 }
+import java.util.Scanner;
+
+public class TransferenciaPIX {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Dados pré-definidos
+        final String SENHA_CORRETA = "J@vaPOO";
+        double saldoOrigem = 1000.00;
+        double limitePix = 500.00;
+        double saldoDestino = 2000.00;
+
+        boolean autenticado = false;
+
+        // Tentativas de senha
+        for (int tentativas = 1; tentativas <= 3; tentativas++) {
+            System.out.print("Digite a senha de acesso: ");
+            String senha = sc.nextLine();
+
+            if (senha.equals(SENHA_CORRETA)) {
+                autenticado = true;
+                break;
+            } else {
+                System.out.println("Senha incorreta! Tentativa " + tentativas + " de 3.");
+            }
+        }
+
+        if (!autenticado) {
+            System.out.println("\nAcesso negado! Número de tentativas excedido.");
+            sc.close();
+            return;
+        }
+
+        // Se chegou aqui, está autenticado
+        System.out.println("\nAcesso liberado ✅");
+
+        // Informar chave PIX (sem validação externa)
+        System.out.print("Informe a chave PIX de destino: ");
+        String chavePix = sc.nextLine();
+
+        // Informar valor da transferência
+        System.out.print("Informe o valor da transferência (R$): ");
+        double valorTransferencia = sc.nextDouble();
+
+        boolean transferenciaRealizada = false;
+
+        // Verificações
+        if (valorTransferencia > saldoOrigem) {
+            System.out.println("\n❌ Transferência negada! Saldo insuficiente.");
+        } else if (valorTransferencia > limitePix) {
+            System.out.println("\n❌ Transferência negada! Valor excede o limite de transação PIX.");
+        } else if (valorTransferencia <= 0) {
+            System.out.println("\n❌ Transferência negada! Valor inválido.");
+        } else {
+            // Transferência realizada
+            saldoOrigem -= valorTransferencia;
+            saldoDestino += valorTransferencia;
+            transferenciaRealizada = true;
+            System.out.println("\n✅ Transferência realizada com sucesso!");
+        }
+
+        // Relatório final
+        System.out.println("\n------ RELATÓRIO DA TRANSAÇÃO ------");
+        System.out.println("Chave PIX destino: " + chavePix);
+        System.out.println("Valor da transferência: R$ " + String.format("%.2f", valorTransferencia));
+        System.out.println("Resultado: " + (transferenciaRealizada ? "REALIZADA" : "NEGADA"));
+        System.out.println("Saldo final de origem: R$ " + String.format("%.2f", saldoOrigem));
+        System.out.println("Limite de transação PIX: R$ " + String.format("%.2f", limitePix));
+        System.out.println("Saldo final de destino: R$ " + String.format("%.2f", saldoDestino));
+
+        sc.close();
+    }
+}
+class Conta {
+    private double saldo;
+
+    public Conta(double saldoInicial) {
+        this.saldo = saldoInicial;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public boolean sacar(double valor) {
+        if (valor > 0 && valor <= saldo) {
+            saldo -= valor;
+            return true;
+        }
+        return false;
+    }
+
+    public void depositar(double valor) {
+        if (valor > 0) {
+            saldo += valor;
+        }
+    }
+}
+
+class TransacaoPIX {
+    private double limite;
+
+    public TransacaoPIX(double limite) {
+        this.limite = limite;
+    }
+
+    public boolean transferir(Conta origem, Conta destino, double valor) {
+        if (valor <= 0) return false;
+        if (valor > limite) return false;
+        if (!origem.sacar(valor)) return false;
+
+        destino.depositar(valor);
+        return true;
+    }
+
+    public double getLimite() {
+        return limite;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        final String SENHA_CORRETA = "J@vaPOO";
+        java.util.Scanner sc = new java.util.Scanner(System.in);
+
+        Conta origem = new Conta(1000.00);
+        Conta destino = new Conta(2000.00);
+        TransacaoPIX pix = new TransacaoPIX(500.00);
+
+        // Autenticação
+        boolean autenticado = false;
+        for (int i = 1; i <= 3; i++) {
+            System.out.print("Digite a senha: ");
+            String senha = sc.nextLine();
+            if (senha.equals(SENHA_CORRETA)) {
+                autenticado = true;
+                break;
+            } else {
+                System.out.println("Senha incorreta! Tentativa " + i + " de 3.");
+            }
+        }
+
+        if (!autenticado) {
+            System.out.println("Acesso negado!");
+            sc.close();
+            return;
+        }
+
+        // Coleta dados
+        System.out.print("Informe a chave PIX destino: ");
+        String chavePix = sc.nextLine();
+        System.out.print("Informe o valor da transferência: ");
+        double valor = sc.nextDouble();
+
+        boolean sucesso = pix.transferir(origem, destino, valor);
+
+        // Relatório
+        System.out.println("\n------ RELATÓRIO ------");
+        System.out.println("Chave PIX destino: " + chavePix);
+        System.out.println("Valor da transferência: R$ " + String.format("%.2f", valor));
+        System.out.println("Resultado: " + (sucesso ? "REALIZADA" : "NEGADA"));
+        System.out.println("Saldo final origem: R$ " + String.format("%.2f", origem.getSaldo()));
+        System.out.println("Limite PIX: R$ " + String.format("%.2f", pix.getLimite()));
+        System.out.println("Saldo final destino: R$ " + String.format("%.2f", destino.getSaldo()));
+
+        sc.close();
+    }
+}

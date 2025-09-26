@@ -495,3 +495,93 @@ public class Main {
     }
 1
 }
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Seguro {
+    String numeroApolice;
+    double valorPremio;
+    String dataValidade;
+
+    public Seguro(String numeroApolice, double valorPremio, String dataValidade) {
+        this.numeroApolice = numeroApolice;
+        this.valorPremio = valorPremio;
+        this.dataValidade = dataValidade;
+    }
+
+    @Override
+    public String toString() {
+        return "Apólice: " + numeroApolice + ", Valor: R$" + valorPremio + ", Validade: " + dataValidade;
+    }
+}
+
+class Veiculo {
+    String placa;
+    String modelo;
+    int anoFabricacao;
+    Seguro seguro;
+
+    public Veiculo(String placa, String modelo, int anoFabricacao, Seguro seguro) {
+        this.placa = placa;
+        this.modelo = modelo;
+        this.anoFabricacao = anoFabricacao;
+        this.seguro = seguro;
+    }
+
+    @Override
+    public String toString() {
+        return "Placa: " + placa + ", Modelo: " + modelo + ", Ano: " + anoFabricacao +
+                "\n  Seguro => " + seguro;
+    }
+}
+
+public class Seguradora {
+
+    private static ArrayList<Veiculo> veiculos = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        int opcao;
+        do {
+            mostrarMenu();
+            opcao = Integer.parseInt(scanner.nextLine());
+            switch (opcao) {
+                case 1:
+                    adicionarVeiculoComSeguro();
+                    break;
+                case 2:
+                    listarVeiculos();
+                    break;
+                case 3:
+                    removerVeiculo();
+                    break;
+                case 4:
+                    System.out.println("Encerrando programa...");
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        } while (opcao != 4);
+    }
+
+    private static void mostrarMenu() {
+        System.out.println("\n==== MENU ====");
+        System.out.println("1. Adicionar veículo com seguro");
+        System.out.println("2. Exibir todos os veículos com seguros");
+        System.out.println("3. Remover veículo por placa");
+        System.out.println("4. Sair");
+        System.out.print("Escolha uma opção: ");
+    }
+
+    private static void adicionarVeiculoComSeguro() {
+        System.out.print("Placa: ");
+        String placa = scanner.nextLine();
+        System.out.print("Modelo: ");
+        String modelo = scanner.nextLine();
+        System.out.print("Ano de fabricação: ");
+        int ano = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Número da apólice: ");
+        String apolice = scanner.nextLine();
+        System.out.print("Valor do prêmio: ");
+        double valor = Double.parse

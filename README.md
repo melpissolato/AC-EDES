@@ -1,33 +1,137 @@
-# AC-EDES
-ACS EDES finalizadas
+import java.util.ArrayList;
+import java.util.Scanner;
 
-LISTA DE ACs POO 
- 
-Escreva um programa que, a partir de um input do usuário, calcule a média salarial dos 3 funcionários de uma startup.  
-Input: nomes dos 3 funcionários e seus respectivos salários. 
-Output: 
-Nomes dos 3 funcionários e seus respectivos salários. 
-Média salarial final. 
-Escreva um programa que, a partir de um input do usuário, use a fórmula de Bhaskara para resolver equações do 2º grau, ou seja, encontrar as raízes da equação. 
-Input: valores de a, b e c. 
-Output:  
-Valores inseridos de a, b e c. 
-Valores de  Δ, x1 e x2.
-Saída esperada para equação: x2 - 3x - 54 = 0 
-Δ = 225.0 
-x1 = 9.0 
-x2 = -6.0
-Fórmula: 
- 
-Escreva um programa que, a partir de um input do usuário, calcule a área e volume de um cilindro.
-Área cilindro = 2 * π * raio * (raio + altura)
-Volume cilindro = π * raio2 * altura
-Input: raio e altura do cilindro.
-Output: área e volume do cilindro.
-Exemplo:
-Raio = 5.0 e Altura = 8.0
-Área = 408.20
-Volume = 628.00
+class Produto {
+    String nome;
+    String categoria;
+    String codigo;
+    double preco;
+    int quantidade;
+
+    public Produto(String nome, String categoria, String codigo, double preco, int quantidade) {
+        this.nome = nome;
+        this.categoria = categoria;
+        this.codigo = codigo;
+        this.preco = preco;
+        this.quantidade = quantidade;
+    }
+
+    @Override
+    public String toString() {
+        return "Código: " + codigo + ", Nome: " + nome + ", Categoria: " + categoria +
+                ", Preço: R$" + preco + ", Quantidade: " + quantidade;
+    }
+}
+
+public class LojaProdutos {
+
+    private static ArrayList<Produto> produtos = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        int opcao;
+        do {
+            mostrarMenu();
+            opcao = Integer.parseInt(scanner.nextLine());
+            switch (opcao) {
+                case 1:
+                    adicionarProduto();
+                    break;
+                case 2:
+                    removerProduto();
+                    break;
+                case 3:
+                    listarProdutos();
+                    break;
+                case 4:
+                    exibirQuantidadeTotal();
+                    break;
+                case 5:
+                    exibirValorTotalEstoque();
+                    break;
+                case 6:
+                    System.out.println("Encerrando programa...");
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        } while (opcao != 6);
+    }
+
+    private static void mostrarMenu() {
+        System.out.println("\n==== MENU ====");
+        System.out.println("1. Adicionar produto");
+        System.out.println("2. Remover produto pelo código");
+        System.out.println("3. Exibir todos os produtos");
+        System.out.println("4. Exibir quantidade total de produtos");
+        System.out.println("5. Exibir valor total do estoque");
+        System.out.println("6. Sair");
+        System.out.print("Escolha uma opção: ");
+    }
+
+    private static void adicionarProduto() {
+        System.out.print("Nome: ");
+        String nome = scanner.nextLine();
+        System.out.print("Categoria: ");
+        String categoria = scanner.nextLine();
+        System.out.print("Código único: ");
+        String codigo = scanner.nextLine();
+        System.out.print("Preço unitário: ");
+        double preco = Double.parseDouble(scanner.nextLine());
+        System.out.print("Quantidade em estoque: ");
+        int quantidade = Integer.parseInt(scanner.nextLine());
+
+        produtos.add(new Produto(nome, categoria, codigo, preco, quantidade));
+        System.out.println("Produto adicionado com sucesso!");
+    }
+
+    private static void removerProduto() {
+        System.out.print("Digite o código do produto a remover: ");
+        String codigo = scanner.nextLine();
+
+        Produto encontrado = null;
+        for (Produto p : produtos) {
+            if (p.codigo.equals(codigo)) {
+                encontrado = p;
+                break;
+            }
+        }
+
+        if (encontrado != null) {
+            produtos.remove(encontrado);
+            System.out.println("Produto removido com sucesso.");
+        } else {
+            System.out.println("Produto não encontrado.");
+        }
+    }
+
+    private static void listarProdutos() {
+        if (produtos.isEmpty()) {
+            System.out.println("Nenhum produto cadastrado.");
+        } else {
+            System.out.println("\n=== Lista de Produtos ===");
+            for (Produto p : produtos) {
+                System.out.println(p);
+            }
+        }
+    }
+
+    private static void exibirQuantidadeTotal() {
+        int total = 0;
+        for (Produto p : produtos) {
+            total += p.quantidade;
+        }
+        System.out.println("Quantidade total de produtos no estoque: " + total);
+    }
+
+    private static void exibirValorTotalEstoque() {
+        double total = 0;
+        for (Produto p : produtos) {
+            total += p.preco * p.quantidade;
+        }
+        System.out.println("Valor total do estoque: R$" + total);
+    }
+}
 
 Escreva um programa que, a partir de um input do usuário, verifique se um aluno foi aprovado em um curso sobre Java. Considere as seguintes questões:
 O curso tem um total de 40 aulas e 2 avaliações (provas);
